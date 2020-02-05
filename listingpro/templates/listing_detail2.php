@@ -1902,7 +1902,7 @@ if (location.href.indexOf("?coupon=true") !== -1) {
 		    jQuery('.wpb_wrapper.vc_figure button.redeem_coupon_button:not(:disabled)').on('click', function() {
 		    	var figure = jQuery(this).parent().find('figure')
 		    	var img = jQuery(this).parent().find('img')
-				var src = encodeURIComponent(img.attr('src'));
+				var src = img.attr('src');
 				console.log(src)
 				console.log("testing")
 			
@@ -1926,26 +1926,9 @@ if (location.href.indexOf("?coupon=true") !== -1) {
 
 					
 
-					// occasionally src & fixedTime will be null in database.
-					// fix: verify src & fixedTime are not null, and if they are, submit them using img.attr()
-					if(!src || !fixedTime){
-						var figure = jQuery('.wpb_wrapper.vc_figure button.redeem_coupon_button:not(:disabled)').parent().find('figure')
-						var img = jQuery('.wpb_wrapper.vc_figure button.redeem_coupon_button:not(:disabled)').parent().find('img')
-						var src = encodeURIComponent(img.attr('src'));
-						sents.push(src);
-						jQuery('#redeem_coupon_container .coupon_src input').val(encodeURIComponent(src));
-						var eightDays = new Date();
-						eightDays.setHours(eightDays.getHours() + 192);
-						expires.push(eightDays.getTime());	
-						myTime = eightDays.toString()
-						fixedTime = myTime.replace("Eastern Daylight Time", "EDT")					
-			        	jQuery('#redeem_coupon_container .expire_src input').val(fixedTime);
-					}
-					else{
-						jQuery('#redeem_coupon_container .coupon_src input').val(src);
-			        	jQuery('#redeem_coupon_container .expire_src input').val(fixedTime);
-					}
-			        
+
+			        jQuery('#redeem_coupon_container .coupon_src input').val(src);
+			        jQuery('#redeem_coupon_container .expire_src input').val(fixedTime);
 		            localStorage.setItem('coupons_sent', JSON.stringify(sents));
 		            localStorage.setItem('coupons_expire', JSON.stringify(expires));
 		            jQuery(this).closest('.wpb_wrapper.vc_figure').find('.redeem_coupon_button').attr('disabled', 'disabled');
